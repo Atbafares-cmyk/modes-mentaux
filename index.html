@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark light">
+<title>Où je me situe aujourd'hui - Exercice 3</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#15161C; --surface:#1E2029; --surface2:#262935; --text:#E8EAF0; --muted:#A2A7B8;
+  --border:#343848; --accent:#B9A6E4; --on-accent:#15161C; --shadow:0 1px 3px rgba(0,0,0,.5);
+  --soft:rgba(255,255,255,.10); --soft:color-mix(in srgb, var(--accent) 20%, transparent);
+}
+:root[data-theme="light"]{
+  --bg:#FFFFFF; --surface:#F4F6F9; --surface2:#ECEEF1; --text:#33334D; --muted:#55556E;
+  --border:#D4DCE4; --accent:#6342A8; --on-accent:#FFFFFF; --shadow:0 1px 3px rgba(51,51,77,.12);
+  --soft:rgba(5,100,174,.10); --soft:color-mix(in srgb, var(--accent) 14%, transparent);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#FFFFFF; --surface:#F4F6F9; --surface2:#ECEEF1; --text:#33334D; --muted:#55556E;
+    --border:#D4DCE4; --accent:#6342A8; --on-accent:#FFFFFF; --shadow:0 1px 3px rgba(51,51,77,.12);
+    --soft:rgba(5,100,174,.10); --soft:color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.5;overflow-x:hidden}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 120px}
+header.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border)}
+header.top .in{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.kicker{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+header.top h1{font-size:16px;margin:2px 0 0;font-weight:700;line-height:1.25}
+.prog{margin-left:auto;text-align:right;flex:0 0 auto}
+.prog b{font-size:17px;font-variant-numeric:tabular-nums}
+.prog span{display:block;font-size:11px;color:var(--muted)}
+.bar{height:3px;background:var(--border)}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:16px;margin:16px 0;box-shadow:var(--shadow)}
+.card h2{margin:0 0 8px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.card.warn{border-color:var(--accent);background:var(--soft)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.chip{background:var(--surface2);border:1px solid var(--border);border-radius:999px;
+  padding:5px 12px;font-size:13px;color:var(--muted)}
+ul.cons{margin:0;padding-left:20px}
+ul.cons li{margin:5px 0}
+.legend{position:sticky;top:var(--stick,58px);z-index:15;background:var(--bg);
+  border-bottom:1px solid var(--border);padding:7px 0;margin:0 -16px 4px;}
+.legend .in{display:flex;gap:6px;padding:0 16px;font-size:11px;color:var(--muted);
+  max-width:720px;margin:0 auto}
+.legend .in span{flex:1 1 0;text-align:center;line-height:1.2}
+.res{scroll-margin-top:12px}
+body.done .legend{display:none}
+.grp{margin:26px 0 8px;font-size:14px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--accent)}
+.q{border-bottom:1px solid var(--border);padding:14px 0}
+.q .lbl{display:flex;gap:10px;margin-bottom:10px}
+.q .n{flex:0 0 auto;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;min-width:1.6em}
+.opts{display:flex;gap:6px}
+.opts button{flex:1 1 0;min-height:46px;border:1.5px solid var(--border);background:var(--surface);
+  color:var(--text);border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;
+  font-variant-numeric:tabular-nums;padding:4px 2px;-webkit-tap-highlight-color:transparent}
+.opts button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.opts.wide button{min-height:40px;font-size:14px}
+.chosen{font-size:13px;color:var(--muted);margin-top:7px;min-height:1.1em}
+.poles{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:9px}
+.poles b{font-weight:600}
+.poles .r{text-align:right;color:var(--accent)}
+.go{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);
+  border-top:1px solid var(--border);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.go .in{max-width:720px;margin:0 auto}
+.go button{width:100%;min-height:52px;border:0;border-radius:12px;background:var(--accent);
+  color:var(--on-accent);font-size:17px;font-weight:700;cursor:pointer}
+.go button:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed}
+.res{display:none}
+.res.on{display:block}
+.score{text-align:center;padding:22px 16px}
+.score .big{font-size:56px;font-weight:800;line-height:1;color:var(--accent);
+  font-variant-numeric:tabular-nums}
+.score .sur{font-size:15px;color:var(--muted);margin-top:6px}
+.score .pal{font-size:21px;font-weight:700;margin-top:14px}
+.subs{display:flex;flex-direction:column;gap:10px}
+.sub{display:flex;align-items:center;gap:12px}
+.sub .nm{flex:0 0 42%;font-size:14px}
+.sub .tr{flex:1 1 auto;height:12px;background:var(--surface2);border-radius:999px;overflow:hidden}
+.sub .tr i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.sub .vl{flex:0 0 auto;font-weight:700;font-variant-numeric:tabular-nums;min-width:3.2em;text-align:right}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
+.prof{margin:10px 0}
+.prof .ln{display:flex;align-items:center;gap:8px;font-size:12px;margin:9px 0}
+.prof .ln .a{flex:0 0 30%;text-align:right;color:var(--muted)}
+.prof .ln .b{flex:0 0 30%;color:var(--muted)}
+.prof .tr{flex:1 1 auto;position:relative;height:22px}
+.prof .tr .ax{position:absolute;top:10px;left:0;right:0;height:2px;background:var(--border)}
+.prof .tr .d{position:absolute;top:4px;width:14px;height:14px;border-radius:50%;
+  background:var(--accent);transform:translateX(-7px)}
+.prof .tr .d.old{background:transparent;border:2px solid var(--muted)}
+.again{display:block;width:100%;min-height:48px;margin-top:8px;border:1.5px solid var(--border);
+  background:var(--surface);color:var(--text);border-radius:12px;font-size:16px;cursor:pointer}
+.seg{display:flex;gap:6px;margin-top:12px}
+.seg button{flex:1 1 0;min-height:42px;border:1.5px solid var(--border);background:var(--surface);
+  color:var(--text);border-radius:10px;font-size:14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+footer{border-top:1px solid var(--border);margin-top:28px;padding:18px 0;font-size:12px;color:var(--muted)}
+footer p{margin:5px 0}
+.tog{position:fixed;right:12px;bottom:82px;z-index:40;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);border-radius:999px;width:44px;height:44px;
+  font-size:19px;line-height:1;cursor:pointer;box-shadow:var(--shadow);opacity:.92;padding:0}
+.tog:hover,.tog:focus{opacity:1}
+a{color:var(--accent)}
+.idx{display:block;text-decoration:none;color:inherit}
+.idx .card{transition:border-color .15s}
+.idx:hover .card,.idx:focus .card{border-color:var(--accent)}
+.idx h3{margin:0 0 4px;font-size:18px}
+@media print{
+  :root{--bg:#fff;--surface:#fff;--surface2:#f2f2f2;--text:#000;--muted:#444;--border:#bbb;
+    --accent:#000;--on-accent:#fff;--soft:#f2f2f2;--shadow:none}
+  .tog,.go,header.top,.legend{display:none !important}
+  body{font-size:12pt}
+}
+</style>
+<script>
+(function(){try{var t=localStorage.getItem('ef-theme');
+if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+</script>
+</head>
+<body>
+<header class="top"><div class="in"><div><div class="kicker">Exercice 3</div><h1>Où je me situe aujourd'hui</h1></div><div class="prog"><b id="pc">0</b><span>sur 7</span></div></div><div class="bar"><i id="pb"></i></div></header><div class="wrap"><div class="card"><h2>Ce que cette échelle mesure</h2><p>Cette échelle situe votre fonctionnement habituel entre deux modes mentaux : le mode automatique, qui sécurise mais enferme, et le mode préfrontal, qui demande un effort mais ouvre à l'adaptation.</p><div class="meta"><span class="chip">10 min</span><span class="chip">Livret page 10</span><span class="chip">Individuel, en silence</span></div></div><div class="card"><h2>Comment répondre</h2><ul class="cons"><li>Pour chaque ligne, choisissez la position qui correspond le mieux à votre fonctionnement habituel.</li><li>1 signifie « je suis tout à fait à gauche », 9 signifie « je suis tout à fait à droite ».</li><li>Il n'y a ni bonne ni mauvaise réponse. Personne ne se situe entièrement d'un côté.</li></ul></div><div class="card"><h2>Quel passage ?</h2><div class="seg"><button id="p1" type="button" aria-pressed="true">Premier passage</button><button id="p2" type="button" aria-pressed="false">Second passage</button></div><p style="margin:12px 0 0;color:var(--muted);font-size:14px">Refaites ce test en fin de formation : votre premier profil sera réaffiché par-dessus le second, pour comparer les deux.</p></div><div class="q" data-q="1"><div class="poles"><b>Stressabilité</b><b class="r">Sérénité</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="q" data-q="2"><div class="poles"><b>Routine</b><b class="r">Curiosité</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="q" data-q="3"><div class="poles"><b>Refus</b><b class="r">Acceptation</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="q" data-q="4"><div class="poles"><b>Dichotomie</b><b class="r">Nuance</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="q" data-q="5"><div class="poles"><b>Certitudes</b><b class="r">Relativité</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="q" data-q="6"><div class="poles"><b>Empirisme</b><b class="r">Réflexion logique</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="q" data-q="7"><div class="poles"><b>Image sociale</b><b class="r">Opinion personnelle</b></div><div class="opts wide" role="group"><button type="button" data-v="0" aria-pressed="false" aria-label="1">1</button><button type="button" data-v="1" aria-pressed="false" aria-label="2">2</button><button type="button" data-v="2" aria-pressed="false" aria-label="3">3</button><button type="button" data-v="3" aria-pressed="false" aria-label="4">4</button><button type="button" data-v="4" aria-pressed="false" aria-label="5">5</button><button type="button" data-v="5" aria-pressed="false" aria-label="6">6</button><button type="button" data-v="6" aria-pressed="false" aria-label="7">7</button><button type="button" data-v="7" aria-pressed="false" aria-label="8">8</button><button type="button" data-v="8" aria-pressed="false" aria-label="9">9</button></div></div><div class="res" id="res"><div class="card"><h2>Mon profil</h2><div class="prof" id="pf"></div><div class="scale"><span>Mode automatique</span><span>Mode préfrontal</span></div><p id="cmp" style="margin-top:16px;font-size:14px;color:var(--muted)"></p></div><div class="card"><h2>Comment lire ce profil</h2><p>Il n'y a ni bon ni mauvais profil, et aucun score. Ce profil est une photographie de votre fonctionnement habituel aujourd'hui.</p><p>Un point à gauche signale un mode automatique dominant sur cette dimension : il sécurise, il va vite, et il enferme quand la situation est nouvelle.</p><p>Un point à droite signale un mode préfrontal : il demande un effort, et il ouvre à l'adaptation.</p></div><button class="again" type="button" onclick="reset()">Recommencer</button></div><footer><p>D'après le livret d'exercices Université Évry Paris-Saclay - mise en forme numérique 23 MindSet - Fares ATBA</p><p>Source : D'après l'approche de la gestion des modes mentaux, Institut de Médecine Environnementale (Jacques Fradin).</p><p>Vos réponses restent sur votre téléphone. Rien n'est enregistré, rien n'est envoyé.</p><p>&copy; 2026 - 23 MindSet - Fares ATBA</p></footer></div><div class="go"><div class="in"><button id="go" type="button" disabled>Voir mon profil</button></div></div>
+<button class="tog" id="tog" type="button" aria-label="Changer l'affichage">☀</button>
+<script>
+(function(){
+ var b=document.getElementById('tog');
+ function cur(){var a=document.documentElement.getAttribute('data-theme');
+   if(a)return a;
+   try{return window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}catch(e){return 'dark';}}
+ function paint(){var d=cur()==='dark';
+   b.textContent=d?'☀':'☾';
+   b.setAttribute('aria-label',d?'Passer en affichage clair':'Passer en affichage sombre');
+   b.setAttribute('title',b.getAttribute('aria-label'));}
+ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+   document.documentElement.setAttribute('data-theme',n);
+   try{localStorage.setItem('ef-theme',n);}catch(e){}paint();});
+ paint();
+ try{window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',paint);}catch(e){}
+})();
+
+var LAB=null, NQ=7, ans={};
+function up(){var n=Object.keys(ans).length;
+  document.getElementById('pc').textContent=n;
+  document.getElementById('pb').style.width=(100*n/NQ)+'%';
+  document.getElementById('go').disabled=(n<NQ);}
+document.querySelectorAll('.q').forEach(function(q){
+  var id=q.getAttribute('data-q'), ch=q.querySelector('.chosen');
+  q.querySelectorAll('.opts button').forEach(function(b){
+    b.addEventListener('click',function(){
+      q.querySelectorAll('.opts button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      ans[id]=parseInt(b.getAttribute('data-v'),10);
+      if(LAB)ch.textContent=LAB[ans[id]];
+      up();});});});
+function reset(){ans={};
+  document.querySelectorAll('.opts button').forEach(function(b){b.setAttribute('aria-pressed','false');});
+  document.querySelectorAll('.chosen').forEach(function(c){c.textContent='';});
+  document.getElementById('res').classList.remove('on');
+  document.body.classList.remove('done');
+  document.getElementById('go').textContent=GOTXT;
+  up();window.scrollTo(0,0);}
+up();
+
+var GOTXT='Voir mon profil', KEY='ef-modes-p1', pass=1;
+var LN=[["Stressabilité","Sérénité"],["Routine","Curiosité"],["Refus","Acceptation"],["Dichotomie","Nuance"],["Certitudes","Relativité"],["Empirisme","Réflexion logique"],["Image sociale","Opinion personnelle"]];
+function seg(p){pass=p;
+  document.getElementById('p1').setAttribute('aria-pressed',p===1?'true':'false');
+  document.getElementById('p2').setAttribute('aria-pressed',p===2?'true':'false');}
+document.getElementById('p1').addEventListener('click',function(){seg(1);});
+document.getElementById('p2').addEventListener('click',function(){seg(2);});
+function old(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):null;}catch(e){return null;}}
+document.getElementById('go').addEventListener('click',function(){
+  var cur=[];for(var i=1;i<=LN.length;i++){cur.push(ans[i]);}
+  var prev=old(), h='', msg='';
+  if(pass===1){try{localStorage.setItem(KEY,JSON.stringify(cur));}catch(e){}
+    msg="Ce profil est gardé sur ce téléphone. En fin de formation, choisissez « Second passage » : les deux profils seront affichés l'un sur l'autre.";}
+  else if(prev&&prev.length===LN.length){
+    msg='Le cercle vide est votre premier passage, le point plein votre second. Regardez les lignes qui ont bougé.';}
+  else{msg="Aucun premier passage n'a été retrouvé sur ce téléphone. Seul le profil du jour est affiché.";}
+  for(var k=0;k<LN.length;k++){
+    var pc=(cur[k]/8)*100;
+    h+='<div class="ln"><div class="a">'+LN[k][0]+'</div><div class="tr"><div class="ax"></div>';
+    if(pass===2&&prev&&prev.length===LN.length){h+='<div class="d old" style="left:'+((prev[k]/8)*100)+'%"></div>';}
+    h+='<div class="d" style="left:'+pc+'%"></div></div><div class="b">'+LN[k][1]+'</div></div>';}
+  document.getElementById('pf').innerHTML=h;
+  document.getElementById('cmp').textContent=msg;
+  document.getElementById('res').classList.add('on');
+  document.body.classList.add('done');
+  this.textContent='Profil affiché ci-dessous';
+  document.getElementById('res').scrollIntoView({behavior:'smooth'});});
+</script>
+</body>
+</html>
